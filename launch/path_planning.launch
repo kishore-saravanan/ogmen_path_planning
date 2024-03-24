@@ -1,0 +1,14 @@
+<launch>
+    <!-- Launch map server -->
+    <arg name="map_file" default="$(find ogmen_path_planning)/maps/map.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen"/>
+
+    <!-- Start path planning node -->
+    <node pkg="ogmen_path_planning" type="path_plan" name="path_plan" output="screen" >
+        <param name="occupancy_map_threshold" value="10"/>          
+        <param name="occupancy_map_inflation_radius" value="0.2"/>
+    </node>
+
+    <!-- RViz visualization -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ogmen_path_planning)/rviz/path_planning.rviz"/>
+</launch>
